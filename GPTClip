@@ -1,0 +1,25 @@
+import os
+import openai
+import pyperclip
+
+# Set up the OpenAI API key
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
+# Get the content from the clipboard
+content = pyperclip.paste()
+
+# Send the content to GPT-3 for analysis
+response = openai.Completion.create(
+    engine="gpt-3.5-turbo",
+    prompt=content,
+    max_tokens=1024,
+    n=1,
+    stop=None,
+    temperature=0.5,
+)
+
+# Print the response from GPT-3
+print(response.choices[0].text)
+
+# Copy the response to the clipboard
+pyperclip.copy(response.choices[0].text)
